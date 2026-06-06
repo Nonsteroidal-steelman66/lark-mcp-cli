@@ -1,14 +1,107 @@
-# lark-cli
+# lark-mcp-cli — Lark/Feishu × Claude (MCP)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Go Version](https://img.shields.io/badge/go-%3E%3D1.23-blue.svg)](https://go.dev/)
-[![npm version](https://img.shields.io/npm/v/@larksuite/cli.svg)](https://www.npmjs.com/package/@larksuite/cli)
+[![MCP](https://img.shields.io/badge/MCP-stdio%20%2B%20http-7C3AED.svg)](#-lark-mcp--use-lark-from-claude-desktop--web)
+[![Tools](https://img.shields.io/badge/MCP%20tools-21-0EA5E9.svg)](./docs/06-cong-cu-mcp.md)
+[![Cowork Skills](https://img.shields.io/badge/Cowork%20skills-23-F59E0B.svg)](./docs/05-bo-skill-cowork.md)
 
-[中文版](./README.zh.md) | [English](./README.md)
+**English** | [Tiếng Việt](./README.vi.md) | [中文版](./README.zh.md)
 
-The official [Lark/Feishu](https://www.larksuite.com/) CLI tool, maintained by the [larksuite](https://github.com/larksuite) team — built for humans and AI Agents. Covers core business domains including Messenger, Docs, Base, Sheets, Slides, Calendar, Mail, Tasks, Meetings, Markdown, and more, with 200+ commands and 26 AI Agent [Skills](./skills/).
+> **Drive your Lark/Feishu workspace from Claude — read mail, summarize meetings, triage tasks, send messages, create docs, approve requests — in plain language, right inside Claude Desktop (Cowork) or claude.ai (web). No Claude Code, no copy-paste, no coding.**
 
-[Install](#installation--quick-start) · [AI Agent Skills](#agent-skills) · [Auth](#authentication) · [Commands](#three-layer-command-system) · [Advanced](#advanced-usage) · [Security](#security--risk-warnings-read-before-use) · [Contributing](#contributing)
+This is `lark-cli` (the official [Lark/Feishu](https://www.larksuite.com/) CLI — 200+ commands across 18 business domains) **plus a built‑in MCP server** and a **Cowork skill kit**, so any [Claude](https://claude.ai) surface can operate Lark out of the box.
+
+[🚀 Lark MCP](#-lark-mcp--use-lark-from-claude-desktop--web) · [Install](#installation--quick-start) · [21 MCP Tools](./docs/06-cong-cu-mcp.md) · [Cowork Skills](./docs/05-bo-skill-cowork.md) · [Full Docs](./docs/README.md) · [Security](#security--risk-warnings-read-before-use)
+
+---
+
+## 🚀 Lark MCP — use Lark from Claude Desktop & web
+
+> **What's new in this build:** a native [MCP](https://modelcontextprotocol.io/) server (`lark-cli mcp serve`) that turns the CLI into **the hands of Claude** inside Lark — plus 23 ready‑made Cowork workflow skills. Built for **business users**, not just developers.
+
+| | |
+| --- | --- |
+| 🧰 **21 curated MCP tools** | IM, Mail, Calendar, Docs, Base, Contact, Task, Drive, Sheets, Meetings, OKR + a generic `lark_api` escape hatch → [tool reference](./docs/06-cong-cu-mcp.md) |
+| 🖥️ **Claude Desktop (Cowork)** | Local **stdio** transport — one config block, restart, done → [desktop guide](./docs/02-cai-dat-claude-desktop.md) |
+| 🌐 **claude.ai (web)** | **Streamable‑HTTP** transport + Cloudflare Tunnel + built‑in **bearer‑token** gate → [web guide](./docs/03-ket-noi-web-claude-ai.md) |
+| 🧠 **23 Cowork skills** | `morning-brief`, `inbox-zero`, `meeting-prep`, `task-prioritizer`, `approval-triage`… speak naturally, Claude runs the chain → [skills](./docs/05-bo-skill-cowork.md) |
+| 🔐 **Safe by default** | Dry‑run on every write, mail saved as draft until confirmed, audit log, OS‑keychain credentials, bearer‑token + constant‑time check → [security](./docs/07-bao-mat-quyen-rieng-tu.md) |
+
+### How it works
+
+```
+You ──"What's on my plate today?"──▶  Claude (Desktop / Web)
+                                            │  picks a tool + args
+                                            ▼
+                                  lark-cli mcp serve   (on your machine)
+                                            │  runs lark-cli <verb> with YOUR auth
+                                            ▼
+                                  open.larksuite.com / open.feishu.cn
+```
+
+The MCP server spawns `lark-cli` subprocesses per tool call, reusing the existing auth, profile, and keychain — so **your data only ever goes to Lark**, never a third party (in stdio/local mode).
+
+### 60‑second quick start (Claude Desktop)
+
+```bash
+# 1. Build & install the binary (adds the `mcp` command)
+./scripts/setup-mcp.sh                 # installs to ~/bin/lark-cli
+lark-cli mcp tools                     # should list 21 tools
+
+# 2. Log in to Lark once (browser OAuth, token stored in OS keychain)
+lark-cli auth login
+
+# 3. Wire into Claude Desktop config, then restart Claude Desktop:
+#    ~/Library/Application Support/Claude/claude_desktop_config.json
+```
+
+```json
+{
+  "mcpServers": {
+    "lark-cli": {
+      "command": "/absolute/path/to/lark-cli",
+      "args": ["mcp", "serve"],
+      "env": { "NO_COLOR": "1" }
+    }
+  }
+}
+```
+
+Now ask Cowork: *"List my calendar today"* or *"Find the contact named Alice"*. → **Full step‑by‑step:** [docs/02](./docs/02-cai-dat-claude-desktop.md). **Web (claude.ai):** [docs/03](./docs/03-ket-noi-web-claude-ai.md).
+
+### Expose to the web (claude.ai) — securely
+
+```bash
+export LARK_MCP_BEARER_TOKEN=$(openssl rand -hex 32)        # secret stays in env
+lark-cli mcp serve --transport http --addr 127.0.0.1:3000 --audit-log ~/.lark-mcp-audit.ndjson
+cloudflared tunnel --url http://127.0.0.1:3000             # → public HTTPS URL
+```
+
+The HTTP endpoint enforces `Authorization: Bearer <token>` on `/` and `/mcp` (constant‑time, `/health` stays open). **Never expose the tunnel without the token.** Add the URL (`https://…/mcp`) as a Custom Connector in claude.ai → [secure web guide](./docs/03-ket-noi-web-claude-ai.md).
+
+### 📚 MCP documentation (business‑user friendly)
+
+| Doc | What |
+| --- | --- |
+| [docs/README](./docs/README.md) | Index + 3‑step start |
+| [01 — Overview & value](./docs/01-tong-quan.md) | Why MCP, ROI |
+| [02 — Claude Desktop setup](./docs/02-cai-dat-claude-desktop.md) | stdio, step‑by‑step |
+| [03 — claude.ai web setup](./docs/03-ket-noi-web-claude-ai.md) | HTTP + tunnel + bearer token |
+| [04 — Login & permissions](./docs/04-dang-nhap-va-quyen.md) | user/bot, scopes |
+| [05 — Cowork skills](./docs/05-bo-skill-cowork.md) | 23 workflows |
+| [06 — MCP tools](./docs/06-cong-cu-mcp.md) | 21 tools reference |
+| [07 — Security & privacy](./docs/07-bao-mat-quyen-rieng-tu.md) | bearer, audit, data flow |
+| [08 — Troubleshooting](./docs/08-xu-ly-su-co.md) | incl. known issues |
+| [09 — Update & maintenance](./docs/09-cap-nhat-bao-tri.md) | upgrades |
+| [30‑slide deck](./docs/SLIDE-DECK-30.md) | presentation prompts |
+| [MCP_QUICKSTART](./MCP_QUICKSTART.md) | all MCP hosts (Cursor, Zed, Cline…) |
+
+> Building or extending tools? See [`cmd/mcp/README.md`](./cmd/mcp/README.md) for the bridge architecture and the `/mcp-add` workflow.
+
+---
+
+## Why lark-cli?
 
 ## Why lark-cli?
 
