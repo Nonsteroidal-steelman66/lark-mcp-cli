@@ -94,7 +94,6 @@ The HTTP endpoint enforces `Authorization: Bearer <token>` on `/` and `/mcp` (co
 | [07 — Security & privacy](./docs/07-bao-mat-quyen-rieng-tu.md) | bearer, audit, data flow |
 | [08 — Troubleshooting](./docs/08-xu-ly-su-co.md) | incl. known issues |
 | [09 — Update & maintenance](./docs/09-cap-nhat-bao-tri.md) | upgrades |
-| [30‑slide deck](./docs/SLIDE-DECK-30.md) | presentation prompts |
 | [MCP_QUICKSTART](./MCP_QUICKSTART.md) | all MCP hosts (Cursor, Zed, Cline…) |
 
 > Building or extending tools? See [`cmd/mcp/README.md`](./cmd/mcp/README.md) for the bridge architecture and the `/mcp-add` workflow.

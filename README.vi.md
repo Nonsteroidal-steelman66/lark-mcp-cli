@@ -94,7 +94,6 @@ Endpoint HTTP bắt buộc `Authorization: Bearer <token>` ở `/` và `/mcp` (s
 | [07 — Bảo mật & riêng tư](./docs/07-bao-mat-quyen-rieng-tu.md) | bearer, audit, data flow |
 | [08 — Xử lý sự cố](./docs/08-xu-ly-su-co.md) | gồm sự cố đã biết |
 | [09 — Cập nhật & bảo trì](./docs/09-cap-nhat-bao-tri.md) | nâng cấp |
-| [Bộ 30 slide](./docs/SLIDE-DECK-30.md) | prompt thuyết trình |
 | [MCP_QUICKSTART](./MCP_QUICKSTART.md) | mọi MCP host (Cursor, Zed, Cline…) |
 
 > Muốn xây/mở rộng tool? Xem [`cmd/mcp/README.md`](./cmd/mcp/README.md) cho kiến trúc bridge và quy trình `/mcp-add`.
